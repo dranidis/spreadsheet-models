@@ -1,14 +1,17 @@
 {
   "name": "spreadsheet-models",
   "version": "1.0.0",
-  "description": "",
-  "main": "Code.js",
+  "description": "Library for processing Google spreadsheets with Google Apps Scirpt and TypeScript",
+  "author": "Dimitris Dranidis",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clasp": "cp appsscript.json build/gas && clasp push",
+    "build": "tsc --build .",
+    "clean": "rm -rf build",
+    "deploy": "npm run clean && npm run build && npm run clasp"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
-    "@types/google-apps-script": "^1.0.10"
+    "@types/google-apps-script": "^1.0.10",
+    "typescript": "^3.8.3"
   }
 }
