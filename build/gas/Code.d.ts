@@ -1,11 +1,20 @@
 declare namespace SheetLib {
+    /**
+     *  For each spreadsheet that you wish to manipulate
+     * you need to create a Sheet object defining the
+     * sheet name, columns (as they appear), fields for
+     * accessing the columns.
+     *
+     * Optionally you can define if the sheet is proteced and
+     * in that case which in the unprotected range.
+     */
     interface Sheet {
-        sheet: string;
+        name: string;
         columns: string[];
         fields: string[];
         hidden?: boolean;
         protected?: boolean;
-        unprotected?: string;
+        unprotectedRange?: string;
     }
 }
 declare namespace SheetLib {
@@ -21,10 +30,10 @@ declare namespace SheetLib {
      *
      * Stops reading if no values in any field.
      *
-     * @param {Sheet} sheetModel
+     * @param {Sheet} sheet
      * @return an array of objects
      */
-    function getData<T>(sheetModel: Sheet): T[];
+    function getData<T>(sheet: Sheet): T[];
     /**
      * getRows<T> returns the entries in the sheet as
      * an array of objects of type T.

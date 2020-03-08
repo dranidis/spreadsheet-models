@@ -7,11 +7,11 @@ namespace SheetLib {
    *
    * Stops reading if no values in any field.
    *
-   * @param {Sheet} sheetModel
+   * @param {Sheet} sheet
    * @return an array of objects
    */
-  export function getData<T>(sheetModel: Sheet): T[] {
-    let sp = SpreadsheetApp.getActive().getSheetByName(sheetModel.sheet);
+  export function getData<T>(sheet: Sheet): T[] {
+    let sp = SpreadsheetApp.getActive().getSheetByName(sheet.name);
     if (sp === null) {
       throw new Error('Spreadsheet not found');
     }
@@ -26,13 +26,13 @@ namespace SheetLib {
         /*
         skip a field if is empty. Used for empty columns in spreadsheet.
         */
-        if (sheetModel.fields[c] == "") {
+        if (sheet.fields[c] == "") {
           continue;
         }
         if (value[c] != "") {
           isData = true;
         }
-        entry[sheetModel.fields[c]] = value[c];
+        entry[sheet.fields[c]] = value[c];
       }
       if (!isData) {
         break;
@@ -67,10 +67,10 @@ namespace SheetLib {
    */
   export function appendRow<T>(sheetModel: Sheet, data: T): void {
     let ss = SpreadsheetApp.getActive();
-    let sheet = ss.getSheetByName(sheetModel.sheet);
+    let sheet = ss.getSheetByName(sheetModel.name);
 
     if (sheet == null) {
-      throw new Error(`The spreadsheet with the name ${sheetModel.sheet} does not exist`);
+      throw new Error(`The spreadsheet with the name ${sheetModel.name} does not exist`);
     }
 
     sheet.appendRow(Object.keys(data).map(key => (<any>data)[key]));
@@ -88,10 +88,10 @@ namespace SheetLib {
     }
 
     let ss = SpreadsheetApp.getActive();
-    let sheet = ss.getSheetByName(sheetModel.sheet);
+    let sheet = ss.getSheetByName(sheetModel.name);
 
     if (sheet == null) {
-      throw new Error(`The spreadsheet with the name ${sheetModel.sheet} is not created`);
+      throw new Error(`The spreadsheet with the name ${sheetModel.name} is not created`);
     }
 
     let dataValues = rows.map(row =>
@@ -109,10 +109,10 @@ namespace SheetLib {
    */
   export function updateRow<T>(sheetModel: Sheet, row: Row<T>): void {
     let ss = SpreadsheetApp.getActive();
-    let sheet = ss.getSheetByName(sheetModel.sheet);
+    let sheet = ss.getSheetByName(sheetModel.name);
 
     if (sheet == null) {
-      throw new Error(`The spreadsheet with the name ${sheetModel.sheet} is not created`);
+      throw new Error(`The spreadsheet with the name ${sheetModel.name} is not created`);
     }
 
     let values = Object.keys(row.data).map(key => (<any>row.data)[key]);
@@ -126,10 +126,10 @@ namespace SheetLib {
    */
   export function createSheet(sheetModel: Sheet) {
     let ss = SpreadsheetApp.getActive();
-    let sheet = ss.getSheetByName(sheetModel.sheet);
+    let sheet = ss.getSheetByName(sheetModel.name);
 
     if (sheet == null)
-      sheet = ss.insertSheet(sheetModel.sheet);
+      sheet = ss.insertSheet(sheetModel.name);
 
     if (sheetModel.hidden)
       sheet.hideSheet();
@@ -145,9 +145,9 @@ namespace SheetLib {
     }
 
     if (sheetModel.protected) {
-      var protection = sheet.protect().setDescription(sheetModel.sheet + " protection");
-      if (sheetModel.unprotected && sheetModel.unprotected != '') {
-        var unprotected = sheet.getRange(sheetModel.unprotected);
+      var protection = sheet.protect().setDescription(sheetModel.name + " protection");
+      if (sheetModel.unprotectedRange && sheetModel.unprotectedRange != '') {
+        var unprotected = sheet.getRange(sheetModel.unprotectedRange);
         protection.setUnprotectedRanges([unprotected]);
       }
       protection.setWarningOnly(true);

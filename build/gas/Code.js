@@ -20,12 +20,12 @@ var SheetLib;
      *
      * Stops reading if no values in any field.
      *
-     * @param {Sheet} sheetModel
+     * @param {Sheet} sheet
      * @return an array of objects
      */
-    function getData(sheetModel) {
+    function getData(sheet) {
         var e_1, _a;
-        var sp = SpreadsheetApp.getActive().getSheetByName(sheetModel.sheet);
+        var sp = SpreadsheetApp.getActive().getSheetByName(sheet.name);
         if (sp === null) {
             throw new Error('Spreadsheet not found');
         }
@@ -41,13 +41,13 @@ var SheetLib;
                     /*
                     skip a field if is empty. Used for empty columns in spreadsheet.
                     */
-                    if (sheetModel.fields[c] == "") {
+                    if (sheet.fields[c] == "") {
                         continue;
                     }
                     if (value[c] != "") {
                         isData = true;
                     }
-                    entry[sheetModel.fields[c]] = value[c];
+                    entry[sheet.fields[c]] = value[c];
                 }
                 if (!isData) {
                     break;
@@ -88,9 +88,9 @@ var SheetLib;
      */
     function appendRow(sheetModel, data) {
         var ss = SpreadsheetApp.getActive();
-        var sheet = ss.getSheetByName(sheetModel.sheet);
+        var sheet = ss.getSheetByName(sheetModel.name);
         if (sheet == null) {
-            throw new Error("The spreadsheet with the name " + sheetModel.sheet + " does not exist");
+            throw new Error("The spreadsheet with the name " + sheetModel.name + " does not exist");
         }
         sheet.appendRow(Object.keys(data).map(function (key) { return data[key]; }));
     }
@@ -106,9 +106,9 @@ var SheetLib;
             return;
         }
         var ss = SpreadsheetApp.getActive();
-        var sheet = ss.getSheetByName(sheetModel.sheet);
+        var sheet = ss.getSheetByName(sheetModel.name);
         if (sheet == null) {
-            throw new Error("The spreadsheet with the name " + sheetModel.sheet + " is not created");
+            throw new Error("The spreadsheet with the name " + sheetModel.name + " is not created");
         }
         var dataValues = rows.map(function (row) {
             return Object.keys(row).map(function (key) { return row[key]; });
@@ -124,9 +124,9 @@ var SheetLib;
      */
     function updateRow(sheetModel, row) {
         var ss = SpreadsheetApp.getActive();
-        var sheet = ss.getSheetByName(sheetModel.sheet);
+        var sheet = ss.getSheetByName(sheetModel.name);
         if (sheet == null) {
-            throw new Error("The spreadsheet with the name " + sheetModel.sheet + " is not created");
+            throw new Error("The spreadsheet with the name " + sheetModel.name + " is not created");
         }
         var values = Object.keys(row.data).map(function (key) { return row.data[key]; });
         sheet.getRange(row.row, 1, 1, values.length).setValues([values]);
@@ -139,9 +139,9 @@ var SheetLib;
      */
     function createSheet(sheetModel) {
         var ss = SpreadsheetApp.getActive();
-        var sheet = ss.getSheetByName(sheetModel.sheet);
+        var sheet = ss.getSheetByName(sheetModel.name);
         if (sheet == null)
-            sheet = ss.insertSheet(sheetModel.sheet);
+            sheet = ss.insertSheet(sheetModel.name);
         if (sheetModel.hidden)
             sheet.hideSheet();
         if (sheetModel.columns.length > 0) {
@@ -153,9 +153,9 @@ var SheetLib;
             sheet.autoResizeColumns(1, sheetModel.columns.length);
         }
         if (sheetModel.protected) {
-            var protection = sheet.protect().setDescription(sheetModel.sheet + " protection");
-            if (sheetModel.unprotected && sheetModel.unprotected != '') {
-                var unprotected = sheet.getRange(sheetModel.unprotected);
+            var protection = sheet.protect().setDescription(sheetModel.name + " protection");
+            if (sheetModel.unprotectedRange && sheetModel.unprotectedRange != '') {
+                var unprotected = sheet.getRange(sheetModel.unprotectedRange);
                 protection.setUnprotectedRanges([unprotected]);
             }
             protection.setWarningOnly(true);

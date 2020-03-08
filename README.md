@@ -12,14 +12,14 @@ Objectives:
 
 The organization and the content of the configuration files is largely based on the: https://github.com/PopGoesTheWza/ts-gas-project-starter project.
 
-# Library repo: dranidis/spreadsheet-models
+## Library: dranidis/spreadsheet-models
 
 This repository has the code for the library.
 
 The library functions are declared in the namespace SheetLib.
 
 
-# Testing repo: dranidis/test-spreadsheet-models
+## Client sample: dranidis/test-spreadsheet-models
 
 This repository is a consumer for the library found in repo:
 dranidis/spreadsheet-models
@@ -30,7 +30,7 @@ The library is installed in the test repo as a npm dependency:
 npm i --save-dev dranidis/spreadsheet-models
 ```
 
-**IMPORTANT**: to compile the code, add  spreadsheet-models in the types in tsconfig.json.
+**IMPORTANT**: Add spreadsheet-models in the types in tsconfig.json.
 
 ```
     "types": [
@@ -38,16 +38,31 @@ npm i --save-dev dranidis/spreadsheet-models
       "spreadsheet-models"
     ],
 ```
-This is the only way for ts compiler to recognize SheetLib as valid name.
+This is the only way for ts compiler to recognize SheetLib as a valid name.
 
 ## Installation and Deployment
 
 ### Library 
+```
+git clone https://github.com/dranidis/spreadsheet-models.git
+cd spreadsheet-models
+npm install
+```
+
+Edit .clasp.json with your own library script id.
+
+Write your library code. When finished:
+
+```
+npm run deploy
+```
+
 
 ### Client 
 
 ```
 git clone https://github.com/dranidis/test-spreadsheet-models.git
+cd test-spreadsheet-models
 npm install
 ```
 
@@ -55,21 +70,15 @@ Edit .clasp.json with your own client script id.
 
 Edit the appsscript.json file in the client: replace the libraryId with the correct script id from your library GAS script. You should also set the correct version (if changed) and the developmentMode (if true you only need to create one version and work with this till tested).
 
-Write your client code.
+Write your client code. When finished:
 
 ```
 npm run deploy
 ```
 
-
-
-
-
 In the web script editor at the library script:
 
 * File -> Manage versions -> Save new version (at least one version needs to be saved for using it as a library)
-
-
 
 
 ## Unresolved Problems
