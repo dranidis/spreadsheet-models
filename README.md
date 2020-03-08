@@ -60,8 +60,7 @@ Edit the appsscript.json file in the client: replace the libraryId with the corr
 
 # Unresolved Problems
 
-* No autocompletion in the web script editor.
+* Autocompletion in the web script editor identifies functions as objects.
 
     * Not a big issue if the development is performed locally using clasp.
 
-* Library functions can only be called within functions. They cannot be used in the global scope when declaring variables. They work locally but they are not recognized when pushed as GAS scripts.

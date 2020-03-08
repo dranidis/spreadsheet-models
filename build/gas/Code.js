@@ -1,15 +1,5 @@
 "use strict";
-/**
- * Necessary declarations so that GAS library
- * exposes the function to the client.
- */
-var getData = SheetLib.getData;
-var appendRow = SheetLib.appendRow;
-var appendRows = SheetLib.appendRows;
-var updateRow = SheetLib.updateRow;
-var createSheet = SheetLib.createSheet;
-var fillWithUnderScore = SheetLib.fillWithUnderScore;
-var getRows = SheetLib.getRows;
+/// <reference path="sheet.ts" />
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
@@ -190,4 +180,25 @@ var SheetLib;
     }
     SheetLib.fillWithUnderScore = fillWithUnderScore;
 })(SheetLib || (SheetLib = {}));
-/// <reference path="sheet.ts" />
+/**
+ * Necessary declarations so that GAS library
+ * exposes the function to the client.
+ */
+var getData = SheetLib.getData;
+var appendRow = SheetLib.appendRow;
+var appendRows = SheetLib.appendRows;
+var updateRow = SheetLib.updateRow;
+var createSheet = SheetLib.createSheet;
+var fillWithUnderScore = SheetLib.fillWithUnderScore;
+var getRows = SheetLib.getRows;
+/** BEGIN index.ts */
+/**
+ * Here the triple slash directives allow to specify order
+ * in which files get added to the output
+ */
+/// <reference path="lib/sheet.ts" />
+/// <reference path="lib/row.ts" />
+/// <reference path="lib/model.ts" />
+/// <reference path="lib/declarations.ts" />
+// other files in tsconfig scope (`files` and `include`) will be added past this point
+/** END index.ts */

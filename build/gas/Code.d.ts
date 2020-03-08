@@ -1,14 +1,3 @@
-/**
- * Necessary declarations so that GAS library
- * exposes the function to the client.
- */
-declare let getData: typeof SheetLib.getData;
-declare let appendRow: typeof SheetLib.appendRow;
-declare let appendRows: typeof SheetLib.appendRows;
-declare let updateRow: typeof SheetLib.updateRow;
-declare let createSheet: typeof SheetLib.createSheet;
-declare let fillWithUnderScore: typeof SheetLib.fillWithUnderScore;
-declare let getRows: typeof SheetLib.getRows;
 declare namespace SheetLib {
     interface Sheet {
         sheet: string;
@@ -17,6 +6,12 @@ declare namespace SheetLib {
         hidden?: boolean;
         protected?: boolean;
         unprotected?: string;
+    }
+}
+declare namespace SheetLib {
+    interface Row<T> {
+        data: T;
+        row: number;
     }
 }
 declare namespace SheetLib {
@@ -78,9 +73,20 @@ declare namespace SheetLib {
      */
     function fillWithUnderScore(str: string, len: number): string;
 }
-declare namespace SheetLib {
-    interface Row<T> {
-        data: T;
-        row: number;
-    }
-}
+/**
+ * Necessary declarations so that GAS library
+ * exposes the function to the client.
+ */
+declare let getData: typeof SheetLib.getData;
+declare let appendRow: typeof SheetLib.appendRow;
+declare let appendRows: typeof SheetLib.appendRows;
+declare let updateRow: typeof SheetLib.updateRow;
+declare let createSheet: typeof SheetLib.createSheet;
+declare let fillWithUnderScore: typeof SheetLib.fillWithUnderScore;
+declare let getRows: typeof SheetLib.getRows;
+/** BEGIN index.ts */
+/**
+ * Here the triple slash directives allow to specify order
+ * in which files get added to the output
+ */
+/** END index.ts */
