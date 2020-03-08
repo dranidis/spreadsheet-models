@@ -58,9 +58,13 @@ In the web script editor at the library script:
 Edit the appsscript.json file in the client: replace the libraryId with the correct script id from your library GAS script. You should also set the correct version (if changed) and the developmentMode (if true you only need to create one version and work with this till tested).
 
 
-# Unresolved Problems
+## Unresolved Problems
 
 * Autocompletion in the web script editor identifies functions as objects.
 
     * Not a big issue if the development is performed locally using clasp.
 
+## Resolved issues
+
+* Declarations of the library functions appear last in the generated script.
+  * Only index.ts is compiled; it determines the order of contents in the final js file.
