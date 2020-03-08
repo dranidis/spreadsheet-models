@@ -5,11 +5,13 @@
   "author": "Dimitris Dranidis",
   "scripts": {
     "clasp": "cp appsscript.json build/gas && clasp push",
-    "build": "tsc --build .",
+    "build": "tsc --build",
     "clean": "rm -rf build",
     "deploy": "npm run clean && npm run build && npm run clasp"
   },
   "license": "MIT",
+  "main": "./build/gas/Code.js",
+  "types": "./build/gas/Code.d.ts",
   "devDependencies": {
     "@types/google-apps-script": "^1.0.10",
     "typescript": "^3.8.3"

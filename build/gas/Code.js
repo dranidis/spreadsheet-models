@@ -1,4 +1,15 @@
 "use strict";
+/**
+ * Necessary declarations so that GAS library
+ * exposes the function to the client.
+ */
+var getData = SheetLib.getData;
+var appendRow = SheetLib.appendRow;
+var appendRows = SheetLib.appendRows;
+var updateRow = SheetLib.updateRow;
+var createSheet = SheetLib.createSheet;
+var fillWithUnderScore = SheetLib.fillWithUnderScore;
+var getRows = SheetLib.getRows;
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);

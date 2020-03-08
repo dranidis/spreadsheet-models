@@ -1,3 +1,14 @@
+/**
+ * Necessary declarations so that GAS library
+ * exposes the function to the client.
+ */
+declare let getData: typeof SheetLib.getData;
+declare let appendRow: typeof SheetLib.appendRow;
+declare let appendRows: typeof SheetLib.appendRows;
+declare let updateRow: typeof SheetLib.updateRow;
+declare let createSheet: typeof SheetLib.createSheet;
+declare let fillWithUnderScore: typeof SheetLib.fillWithUnderScore;
+declare let getRows: typeof SheetLib.getRows;
 declare namespace SheetLib {
     interface Sheet {
         sheet: string;
