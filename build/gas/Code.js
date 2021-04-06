@@ -27,7 +27,7 @@ var SheetLib;
         var e_1, _a;
         var sp = SpreadsheetApp.getActive().getSheetByName(sheet.name);
         if (sp === null) {
-            throw new Error('Spreadsheet not found');
+            throw new Error("Spreadsheet not found");
         }
         var values = sp.getDataRange().getValues();
         values.shift();
@@ -77,9 +77,15 @@ var SheetLib;
     function getRows(sheet, firstDataRow) {
         if (firstDataRow === void 0) { firstDataRow = 2; }
         var i = firstDataRow;
-        return getData(sheet).map(function (entry) { return { data: entry, row: i++ }; });
+        return getData(sheet).map(function (entry) {
+            return { data: entry, row: i++ };
+        });
     }
     SheetLib.getRows = getRows;
+    function testLib() {
+        console.log("Testing SheetLib");
+    }
+    SheetLib.testLib = testLib;
     /**
      * Appends a single row of data
      *
@@ -113,7 +119,9 @@ var SheetLib;
         var dataValues = rows.map(function (row) {
             return Object.keys(row).map(function (key) { return row[key]; });
         });
-        sheet.getRange(sheet.getLastRow() + 1, 1, dataValues.length, dataValues[0].length).setValues(dataValues);
+        sheet
+            .getRange(sheet.getLastRow() + 1, 1, dataValues.length, dataValues[0].length)
+            .setValues(dataValues);
     }
     SheetLib.appendRows = appendRows;
     /**
@@ -133,6 +141,36 @@ var SheetLib;
     }
     SheetLib.updateRow = updateRow;
     /**
+     * Updates partially a row in the spreadsheet
+     *
+     * @param sheetModel
+     * @param rowNr
+     * @param partialObject
+     */
+    function updatePartialRow(sheetModel, rowNr, partialObject) {
+        var e_2, _a;
+        var ss = SpreadsheetApp.getActive();
+        var sheet = ss.getSheetByName(sheetModel.name);
+        if (sheet == null) {
+            throw new Error("The spreadsheet with the name " + sheetModel.name + " is not created");
+        }
+        try {
+            for (var _b = __values(Object.keys(partialObject)), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var key = _c.value;
+                var column = sheetModel.fields.indexOf(key);
+                sheet.getRange(rowNr, column + 1).setValue(partialObject[key]);
+            }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b["return"])) _a.call(_b);
+            }
+            finally { if (e_2) throw e_2.error; }
+        }
+    }
+    SheetLib.updatePartialRow = updatePartialRow;
+    /**
      * Creates a spreadsheet given a Sheet model
      *
      * @param {Sheet} sheetModel
@@ -145,7 +183,8 @@ var SheetLib;
         if (sheetModel.hidden)
             sheet.hideSheet();
         if (sheetModel.columns.length > 0) {
-            sheet.getRange(1, 1, 1, sheetModel.columns.length)
+            sheet
+                .getRange(1, 1, 1, sheetModel.columns.length)
                 .setValues([sheetModel.columns])
                 .setBackground("black")
                 .setFontWeight("bold")
@@ -153,8 +192,10 @@ var SheetLib;
             sheet.autoResizeColumns(1, sheetModel.columns.length);
         }
         if (sheetModel.protected) {
-            var protection = sheet.protect().setDescription(sheetModel.name + " protection");
-            if (sheetModel.unprotectedRange && sheetModel.unprotectedRange != '') {
+            var protection = sheet
+                .protect()
+                .setDescription(sheetModel.name + " protection");
+            if (sheetModel.unprotectedRange && sheetModel.unprotectedRange != "") {
                 var unprotected = sheet.getRange(sheetModel.unprotectedRange);
                 protection.setUnprotectedRanges([unprotected]);
             }
@@ -191,6 +232,7 @@ var updateRow = SheetLib.updateRow;
 var createSheet = SheetLib.createSheet;
 var fillWithUnderScore = SheetLib.fillWithUnderScore;
 var getRows = SheetLib.getRows;
+var testLib = SheetLib.testLib;
 /** BEGIN index.ts */
 /**
  * Here the triple slash directives allow to specify order

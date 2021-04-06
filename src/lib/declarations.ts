@@ -9,3 +9,4 @@ let updateRow = SheetLib.updateRow;
 let createSheet = SheetLib.createSheet;
 let fillWithUnderScore = SheetLib.fillWithUnderScore;
 let getRows = SheetLib.getRows;
+let testLib = SheetLib.testLib;

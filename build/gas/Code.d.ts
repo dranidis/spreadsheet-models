@@ -1,11 +1,11 @@
 declare namespace SheetLib {
     /**
-     *  For each spreadsheet that you wish to manipulate
+     * For each spreadsheet that you wish to manipulate
      * you need to create a Sheet object defining the
      * sheet name, columns (as they appear), fields for
      * accessing the columns.
      *
-     * Optionally you can define if the sheet is proteced and
+     * Optionally you can define if the sheet is protected and
      * in that case which in the unprotected range.
      */
     interface Sheet {
@@ -44,6 +44,7 @@ declare namespace SheetLib {
      * @return an array of objects
      */
     function getRows<T>(sheet: Sheet, firstDataRow?: number): Row<T>[];
+    function testLib(): void;
     /**
      * Appends a single row of data
      *
@@ -65,6 +66,14 @@ declare namespace SheetLib {
      * @param row
      */
     function updateRow<T>(sheetModel: Sheet, row: Row<T>): void;
+    /**
+     * Updates partially a row in the spreadsheet
+     *
+     * @param sheetModel
+     * @param rowNr
+     * @param partialObject
+     */
+    function updatePartialRow<T>(sheetModel: Sheet, rowNr: number, partialObject: Partial<T>): void;
     /**
      * Creates a spreadsheet given a Sheet model
      *
@@ -93,6 +102,7 @@ declare let updateRow: typeof SheetLib.updateRow;
 declare let createSheet: typeof SheetLib.createSheet;
 declare let fillWithUnderScore: typeof SheetLib.fillWithUnderScore;
 declare let getRows: typeof SheetLib.getRows;
+declare let testLib: typeof SheetLib.testLib;
 /** BEGIN index.ts */
 /**
  * Here the triple slash directives allow to specify order
